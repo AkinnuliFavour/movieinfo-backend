@@ -28,4 +28,4 @@ const getForums = async (req, res) => {
 
 // ... other methods like getForum, updateForum, deleteForum
 
-module.exports = new ForumController();
+module.exports = { createForum, getForums };
