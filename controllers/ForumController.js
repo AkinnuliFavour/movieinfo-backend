@@ -4,6 +4,7 @@ const Forum = require("../models/Forum");
 const createForum = async (req, res) => {
   try {
     const { name, description } = req.body;
+    if (!name) return res.status(400).json({ error: "Forum name is required" });
     const forum = new Forum({
       name,
       description,
@@ -12,6 +13,7 @@ const createForum = async (req, res) => {
     await forum.save();
     res.status(201).json(forum);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "Error creating forum" });
   }
 };
