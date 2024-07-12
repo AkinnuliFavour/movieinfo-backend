@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
     },
+    admin: {
+      type: Boolean,
+      required: [true, "Verify Admin Status"],
+    },
     createdAt: {
       type: Date,
       default: new Date(),
