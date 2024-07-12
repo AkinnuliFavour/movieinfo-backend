@@ -4,7 +4,7 @@ const { createSecretToken } = require("../utils/SecretToken");
 
 const createUser = async (req, res) => {
   try {
-    const { email, password, createdAt } = req.body;
+    const { email, password, isAdmin, createdAt } = req.body;
 
     if (!email || !password) {
       return res
@@ -25,11 +25,20 @@ const createUser = async (req, res) => {
     const user = await User.create({
       email,
       password,
+      isAdmin,
       createdAt,
     });
 
     const token = createSecretToken(user._id);
+
+    // store token in cookie
     res.cookie("token", token, {
+      withCredentials: true,
+      httpOnly: false,
+    });
+
+    // store admin status in cookie
+    res.cookie("isAdmin", isAdmin, {
       withCredentials: true,
       httpOnly: false,
     });
