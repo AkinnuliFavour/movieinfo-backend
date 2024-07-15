@@ -16,6 +16,9 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       required: [true, "Verify Admin Status"],
     },
+    forum: [{ type: mongoose.Schema.Types.ObjectId, ref: "Forum" }],
+    messages: [{ type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
+    watchlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Watchlist" }],
     createdAt: {
       type: Date,
       default: new Date(),
