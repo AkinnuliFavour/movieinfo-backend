@@ -2,8 +2,10 @@ const Forum = require("../models/Forum");
 
 // Create new forum
 const createForum = async (req, res) => {
+  const { name, description } = req.body;
+  const createdBy = req.user.id; // Assuming req.user is set by auth middleware
+  console.log(createdBy);
   try {
-    const { name, description } = req.body;
     if (!name) return res.status(400).json({ error: "Forum name is required" });
     const forum = new Forum({
       name,
