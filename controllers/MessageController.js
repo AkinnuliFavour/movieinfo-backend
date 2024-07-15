@@ -2,8 +2,12 @@ const Message = require("../models/Message"); // import Message model
 
 // Get all messages (could be paginated)
 const getAllMessages = async (req, res) => {
+  const user = req.user;
+  const { forumId } = req.params;
   try {
-    const messages = await Message.find().sort({ timestamp: -1 }).limit(50);
+    const messages = await Message.find({ forum: forumId })
+      .sort({ timestamp: -1 })
+      .limit(50);
     res.json(messages);
   } catch (error) {
     res.status(500).json({ error: "Error fetching messages" });
@@ -12,9 +16,15 @@ const getAllMessages = async (req, res) => {
 
 // Create a new message
 const createMessage = async (req, res) => {
-  const {message} = req.body;
+  const user = req.user;
+  const { message, forumId } = req.body;
+  const fullMessage = {
+    message,
+    user: user.id,
+    forum: forumId,
+  };
   try {
-    const newMessage = new Message(message);
+    const newMessage = new Message(fullMessage);
     await newMessage.save();
     return newMessage;
   } catch (error) {
