@@ -13,7 +13,7 @@ const userVerification = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.TOKEN_KEY);
 
     // Find the user
-    const user = await User.findById(data.id);
+    const user = await User.findById(decoded.id);
 
     if (!user) {
       throw new Error();
@@ -28,4 +28,4 @@ const userVerification = async (req, res, next) => {
   }
 };
 
-module.exports = { userVerification };
+module.exports = userVerification;
