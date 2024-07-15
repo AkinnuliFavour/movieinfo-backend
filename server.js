@@ -4,6 +4,7 @@ const app = express();
 const http = require("http");
 const path = require("path");
 const socketIo = require("socket.io");
+const cookieParser = require("cookie-parser");
 // const { logger, logEvents } = require("./middleware/logger");
 const errorHandler = require("./middleware/errorHandler");
 const socketHandler = require("./socket/socketHandler");
@@ -24,6 +25,7 @@ connectDB();
 
 // Middlewares
 app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Hey this is my API running!");
