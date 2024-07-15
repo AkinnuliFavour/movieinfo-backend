@@ -8,7 +8,7 @@ const userVerification = async (req, res, next) => {
   try {
     // Get the token from cookie
     const token = req.cookies.token;
-
+    console.log(token);
     if (!token) {
       throw new Error();
     }
