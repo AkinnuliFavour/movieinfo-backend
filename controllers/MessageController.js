@@ -11,7 +11,8 @@ const getAllMessages = async (req, res) => {
 };
 
 // Create a new message
-const createMessage = async (message) => {
+const createMessage = async (req, res) => {
+  const {message} = req.body;
   try {
     const newMessage = new Message(message);
     await newMessage.save();
