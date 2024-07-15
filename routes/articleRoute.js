@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const articleController = require("../controllers/articleController");
-const auth = require("../middleware/authMiddleware");
+const userVerification = require("../middleware/authMiddleware");
 
-router.route("/").get(auth, articleController.fetchArticle);
+router.route("/").get(userVerification, articleController.fetchArticle);
 
 module.exports = router;
