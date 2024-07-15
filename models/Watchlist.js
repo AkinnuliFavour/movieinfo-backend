@@ -2,11 +2,14 @@ const mongoose = require("mongoose");
 
 const watchlistSchema = new mongoose.Schema(
   {
+    user: {
+      type: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      required: [true, "user is required"],
+    },
     url: {
       type: String,
       required: [true, "url of movie is required"],
     },
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     createdAt: {
       type: Date,
       default: new Date(),

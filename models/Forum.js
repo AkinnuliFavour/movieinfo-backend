@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const ForumSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  name: { type: String, required: [true, "Forum must have a name"] },
   description: String,
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   createdAt: { type: Date, default: Date.now },
 });
 

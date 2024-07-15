@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 
 const messageSchema = new mongoose.Schema(
   {
+    User: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     content: {
       type: String,
       required: [true, "Content is required"],
     },
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     createdAt: {
       type: Date,
       default: new Date(),
