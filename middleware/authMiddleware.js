@@ -9,6 +9,10 @@ const userVerification = async (req, res, next) => {
     // Get the token from cookie
     const token = req.cookies.token;
 
+    if (!token) {
+      throw new Error();
+    }
+
     // Verify the token
     const decoded = jwt.verify(token, process.env.TOKEN_KEY);
 

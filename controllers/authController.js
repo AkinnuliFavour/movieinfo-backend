@@ -33,7 +33,9 @@ const login = async (req, res) => {
     // Store token in cookie
     res.cookie("token", token, {
       withCredentials: true,
-      httpOnly: false,
+      httpOnly: true,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24, // 24 hours
     });
 
     // Store admin status in cookie
