@@ -3,10 +3,15 @@ const mongoose = require("mongoose");
 
 const messageSchema = new mongoose.Schema(
   {
-    User: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    content: {
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    forum: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Forum",
+      required: true,
+    },
+    message: {
       type: String,
-      required: [true, "Content is required"],
+      required: [true, "message is required"],
     },
     createdAt: {
       type: Date,

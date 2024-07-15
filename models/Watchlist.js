@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const watchlistSchema = new mongoose.Schema(
   {
     user: {
-      type: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      type: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
       required: [true, "user is required"],
     },
     url: {
