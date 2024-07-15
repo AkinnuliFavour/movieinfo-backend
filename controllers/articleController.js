@@ -13,17 +13,23 @@ let url =
   "sortBy=publishedAt&" +
   "apiKey=75e98f479be948cebad68ba962e010fe";
 
-const fetchArticle = (req, res) => {
+const fetchArticle = async (req, res) => {
   console.log(req.query);
   const url = req.query.url;
   // Make the request with axios' get() function
 
   // ...and download the HTML for it, again with axios
-  axios.get(url).then(function (r2) {
-    // We now have the article HTML, but before we can use Readability to locate the article content we need jsdom to convert it into a DOM object
-    let dom = new JSDOM(r2.data, {
+  try {
+    const r2 = await axios.get(url);
+    const dom = new JSDOM(r2.data, {
       url,
     });
+
+    // axios.get(url).then(function (r2) {
+    //   // We now have the article HTML, but before we can use Readability to locate the article content we need jsdom to convert it into a DOM object
+    //   let dom = new JSDOM(r2.data, {
+    //     url,
+    //   });
 
     // now pass the DOM document into readability to parse
     let article = new Readability(dom.window.document).parse();
@@ -32,7 +38,10 @@ const fetchArticle = (req, res) => {
 
     // Send article
     res.json(article.textContent);
-  });
+  } catch (error) {
+    console.error(error);
+    res.status(401).send({ error: "Cannot fetch article." });
+  }
 };
 
 module.exports = { fetchArticle };
