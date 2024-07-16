@@ -49,9 +49,9 @@ const login = async (req, res) => {
       .status(201).ccookie("token", token, {
         withCredentials: true,
         httpOnly: true,
-        sameSite: "none",
+        sameSite: "Strict",
         maxAge: 1000 * 60 * 60 * 24, // 24 hours
-        secure: strict,
+        secure: false,
       })
       .json({ message: "User logged in successfully", success: true });
   } catch (error) {
