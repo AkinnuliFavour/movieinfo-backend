@@ -36,6 +36,7 @@ const login = async (req, res) => {
       httpOnly: true,
       sameSite: "none",
       maxAge: 1000 * 60 * 60 * 24, // 24 hours
+      secure: true,
     });
 
     // Store admin status in cookie
@@ -45,7 +46,13 @@ const login = async (req, res) => {
     });
 
     res
-      .status(201)
+      .status(201).ccookie("token", token, {
+        withCredentials: true,
+        httpOnly: true,
+        sameSite: "none",
+        maxAge: 1000 * 60 * 60 * 24, // 24 hours
+        secure: strict,
+      })
       .json({ message: "User logged in successfully", success: true });
   } catch (error) {
     console.error(error);
