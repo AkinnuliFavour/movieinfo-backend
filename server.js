@@ -36,6 +36,7 @@ app.get("/", (req, res) => {
 app.use("/auth", require("./routes/authRoute"));
 app.use("/users", require("./routes/usersRoute"));
 app.use("/articles", require("./routes/articleRoute"));
+app.use("/watchList", require("./routes/watchListRoute"));
 app.use("/messages", require("./routes/messageRoute"));
 app.use("/forums", require("./routes/ForumRoute"));
 
