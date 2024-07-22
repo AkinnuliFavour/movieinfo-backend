@@ -10,7 +10,7 @@ const userVerification = async (req, res, next) => {
     const token = req.cookies.token;
     console.log(token);
     if (!token) {
-      throw new Error();
+      res.status(401).json({ message: "Please authenticate." })
     }
 
     // Verify the token
@@ -20,16 +20,16 @@ const userVerification = async (req, res, next) => {
     const user = await User.findById(decoded.id);
 
     if (!user) {
-      throw new Error();
+      res.status(401).json({ message: "User cannot be found." })
     }
 
     // Attach the user to the request object
     req.user = user;
     req.token = token;
-    next();
+
+    return next();
   } catch (error) {
-    res.status(401).send({ error: "Please authenticate." });
+    res.status(401).json({ error: "Please authenticate." });
   }
 };
-
 module.exports = userVerification;

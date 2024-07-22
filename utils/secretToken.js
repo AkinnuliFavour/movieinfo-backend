@@ -1,10 +1,10 @@
-require("dotenv").config();
+const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 
 const createSecretToken = (id) => {
-  console.log(process.env.TOKEN_KEY);
+  const token = process.env.TOKEN_KEY;
   console.log(id);
-  return jwt.sign({ id }, process.env.TOKEN_KEY, {
+  return jwt.sign({ id }, token, {
     expiresIn: '1d',
   });
 };

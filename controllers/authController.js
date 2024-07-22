@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const { createSecretToken } = require("../utils/SecretToken");
+const { createSecretToken } = require("../utils/secretToken");
 const bcrypt = require("bcrypt");
 
 const login = async (req, res) => {
@@ -30,30 +30,37 @@ const login = async (req, res) => {
     // Create a jwt token
     const token = createSecretToken(user._id);
 
-    // Store token in cookie
-    res.cookie("token", token, {
+    console.log(token);
+
+    // res.cookie().json({token: token});
+
+    return res.cookie("token", token, {
       withCredentials: true,
       httpOnly: true,
-      sameSite: "none",
+      sameSite: "strict",
       maxAge: 1000 * 60 * 60 * 24, // 24 hours
-      secure: true,
-    });
+      secure: false
+    }).status(200).json("User logged in successfully!");
 
-    // Store admin status in cookie
-    res.cookie("admin", user.admin, {
-      withCredentials: true,
-      httpOnly: false,
-    });
+    // Store token in cookie
+//     if(token){
+//       res.cookie("token", token, {
+//         withCredentials: true,
+//         httpOnly: true,
+//         sameSite: "none",
+//         maxAge: 1000 * 60 * 60 * 24, // 24 hours
+//         secure: false
+//       });
+// 
+//       // Store admin status in cookie
+//       res.cookie("admin", user.admin, {
+//         withCredentials: true,
+//         httpOnly: true,
+//       });
+// 
+//       res.status(200).json("User logged in successfully!")
+//     }
 
-    res
-      .status(201).ccookie("token", token, {
-        withCredentials: true,
-        httpOnly: true,
-        sameSite: "Strict",
-        maxAge: 1000 * 60 * 60 * 24, // 24 hours
-        secure: false,
-      })
-      .json({ message: "User logged in successfully", success: true });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error logging in" });

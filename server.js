@@ -14,6 +14,8 @@ const connectDB = require("./config/dbConn");
 const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3500;
 
+app.use(cookieParser());
+
 const server = http.createServer(app);
 
 console.log(process.env.NODE_ENV);
@@ -25,7 +27,6 @@ connectDB();
 
 // Middlewares
 app.use(cors(corsOptions));
-app.use(cookieParser());
 app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Hey this is my API running!");
@@ -53,16 +54,16 @@ socketHandler(io);
 app.use(errorHandler);
 
 // Not found middleware
-app.all("*", (req, res) => {
-  res.status(404);
-  if (req.accepts("html")) {
-    res.sendFile(path.join(__dirname, "views", "404.html"));
-  } else if (req.accepts("json")) {
-    res.json({ message: "404 Not Found" });
-  } else {
-    res.type("txt").send("404 Not Found");
-  }
-});
+// app.all("*", (req, res) => {
+//   res.status(404);
+//   if (req.accepts("html")) {
+//     res.sendFile(path.join(__dirname, "views", "404.html"));
+//   } else if (req.accepts("json")) {
+//     res.json({ message: "404 Not Found" });
+//   } else {
+//     res.type("txt").send("404 Not Found");
+//   }
+// });
 
 // Start server
 mongoose.connection.once("open", () => {

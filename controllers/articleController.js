@@ -7,11 +7,11 @@ const { Readability } = require("@mozilla/readability");
 // First lets get some search data from News API
 
 // Build the URL we are going request. This will get articles related to Apple and sort them newest first
-let url =
-  "https://newsapi.org/v2/everything?" +
-  "q=movies&" +
-  "sortBy=publishedAt&" +
-  "apiKey=75e98f479be948cebad68ba962e010fe";
+// let url =
+//   "https://newsapi.org/v2/everything?" +
+//   "q=movies&" +
+//   "sortBy=publishedAt&" +
+//   "apiKey=75e98f479be948cebad68ba962e010fe";
 
 const fetchArticle = async (req, res) => {
   console.log(req.query);
@@ -35,12 +35,12 @@ const fetchArticle = async (req, res) => {
     let article = new Readability(dom.window.document).parse();
 
     // Done! The article content is in the textContent property
-
+    // console.log(article.textContent)
     // Send article
-    res.json(article.textContent);
+    return res.json(article.textContent);
   } catch (error) {
     console.error(error);
-    res.status(401).send({ error: "Cannot fetch article." });
+    return res.status(401).send({ error: "Cannot fetch article." });
   }
 };
 
