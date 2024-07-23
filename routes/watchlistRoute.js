@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const watchlistController = require("../controllers/watchlistController");
-const auth = require("../middleware/authMiddleware");
+const watchListController = require("../controllers/watchListController");
+const userVerification = require("../middleware/authMiddleware");
 
-router.route("/").get(auth, watchlistController.getWatchlist).post(auth, watchlistController.createWatchlist).delete(auth, watchlistController.deleteWatchlist);
+router.route("/")
+.get(userVerification, watchListController.getAllWatchList).post(userVerification, watchListController.createWatchList).delete(userVerification, watchListController.deleteWatchList);
+
+module.exports = router;

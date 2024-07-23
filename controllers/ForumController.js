@@ -10,7 +10,7 @@ const createForum = async (req, res) => {
     const forum = new Forum({
       name,
       description,
-      createdBy: req.user.id, // Assuming req.user is set by auth middleware
+      user: req.user.id, // Assuming req.user is set by auth middleware
     });
     await forum.save();
     res.status(201).json(forum);
