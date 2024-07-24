@@ -25,12 +25,15 @@ const createWatchList = async (req, res) => {
 }
 
 const deleteWatchList = async (req, res) => {
-    const { id } = req.params;
+    const { movieId } = req.query;
+    console.log(req.query);
+    const user = req.user.id; // Assuming req.user is set by auth middleware
+    console.log(user)
     try {
-        await WatchList.findByIdAndDelete(id);
+        await WatchList.deleteMany({user, movieId});
         return res.status(200).json({ message: 'Watchlist deleted successfully' });
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        return res.status(401).json({ message: "Cannot delete watchlist" });
     }
 }
 
